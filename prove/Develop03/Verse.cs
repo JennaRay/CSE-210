@@ -3,8 +3,8 @@ using System;
 class Verse
 {
     private int _number;
-    private List<Word> _words = new List<Word>();
-    public bool _isHidden;
+    private List<Word> _words = new List<Word>{};
+    public bool _isHidden = false;
 
     public Verse(int verseNumber, string text)
     {
@@ -12,7 +12,7 @@ class Verse
         string[] words = text.Split(" ");
         foreach (string word in words)
         {
-            _words.Append(new Word(word));
+            _words.Add(new Word(word));
         }
 
     }
@@ -28,22 +28,34 @@ class Verse
                 word._isHidden = true;
             }
         }
+        
+    }
+
+    public void Display()
+    {
+        Console.WriteLine("    ");
+        foreach (Word word in _words)
+        {
+            word.Display();
+        }
+    }
+
+    public void CheckHidden()
+    {
         foreach (Word word in _words)
         {
             if (!word._isHidden)
             {
                 _isHidden = false;
+        
             }
         }
-    }
 
-    public void Display()
-    {
-        Console.WriteLine($"{_number}.");
-        foreach (Word word in _words)
+        if (_isHidden != false)
         {
-            word.Display();
+            _isHidden = true;
         }
+
     }
 
 }

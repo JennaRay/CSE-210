@@ -3,6 +3,7 @@ class Word
 {
     private string _text;
     public bool _isHidden;
+    
     public Word(string text)
     {
         _text = text;
@@ -10,7 +11,7 @@ class Word
 
     public void Display()
     {
-        char[] punct = new char[] {'.', ',', ':', ';', '"', '-', '!', '?', '(', ')'};
+        char[] punct = {'.', ',', ':', ';', '"', '-', '!', '?', '(', ')'};
         if (_isHidden)
         {
             foreach (char x in _text)
@@ -21,6 +22,6 @@ class Word
                 }
             }
         }
-        else {Console.Write(_text);}
+        else {Console.Write(_text + " ");}
     }
 }

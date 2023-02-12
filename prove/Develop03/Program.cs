@@ -4,16 +4,19 @@ class Program
 {   private static List<Scripture> _scriptures = new List<Scripture>{};
     private static Scripture _scripture;
     static void Main(string[] args)
-    {
+    {   
         StartUp();
 
         bool playing = true;
         while (playing)
-        {
+        {   
+            _scripture.CheckHidden();
             string input = Console.ReadLine();
-            if (input == "quit" || _scripture._isHidden)
+            if (input == "quit" | _scripture._isHidden)
             {
                 playing = false;
+                Console.Clear();
+                Console.WriteLine("Thanks for playing!");
             }
             else
             {
@@ -48,7 +51,7 @@ class Program
                     }
                     
                     Scripture scripture = new Scripture(reference, text, numVerses, start);
-                    _scriptures.Append(scripture);
+                    _scriptures.Add(scripture);
                 }
         }       
     }
@@ -66,6 +69,8 @@ class Program
         CreateScriptures();
         _scripture = PickScripture();
         _scripture.Display();
+        Console.WriteLine();
+        Console.WriteLine();
         Console.WriteLine("Hit enter to hide words, or type 'quit' to end program");
 
     }
