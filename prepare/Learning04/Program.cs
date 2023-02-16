@@ -1,9 +1,13 @@
 using System;
 
-class Program
+ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello Learning04 World!");
+        WritingAssignment test = new WritingAssignment("Jenna Ray", "Russian", "Why Russia is Cool");
+        Console.WriteLine(test.GetSummary());
+        Console.WriteLine(test.GetWritingInformation());
+
+
     }
 }
