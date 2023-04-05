@@ -1,27 +1,73 @@
 using System;
 
 class Program
-{
-    static void Main(string[] args)
+{   
+    string _fileName = "mealplanning.txt";
+    Calander _calander = new Calander();
+    User _user = new User();
+    public void Main(string[] args)
     {
-        Menu.DisplayMenu();
-    }
-}
+        bool playing = true;
 
-static class Menu
-{
+        while (playing)
+        {
+            DisplayMenu();
+        }
+    }
+
+    public void Load()
+    {
+        if (!File.Exists(_fileName))
+        {
+            using (FileStream fs = File.Create(_fileName)){}
+        }
+        string[] lines = System.IO.File.ReadAllLines(_fileName);
+        int count = 0;
+        foreach (string line in lines)
+        {
+            count += 1;
+            if (count == 1)
+            {
+                string[] parts = line.Split("||");
+                _user.SetName(parts[0]);
+                _user.SetWeight(parts[1]);
+                _user.SetSex(parts[2]);
+                _user.SetPregnant(parts[3]);
+            }
+            else if (count == 2)
+            {
+                string[] parts = line.Split("||");
+                _calander.SetWeeks(parts[0]);
+                _calander.SetTimers(parts[1]);
+                _calander.SetMonth(parts[2]);
+                _calander.SetYear(parts[3]);
+            }
+        }
+       
+    }
+
+    public void Save()
+    {
+        using (StreamWriter outputFile = new StreamWriter(_fileName))
+        {
+            // line for user
+            outputFile.WriteLine($"{_user.GetName()}||{_user.GetWeight}||{_user.GetSex()}||{_user.GetPregnant()} ");
+            // line for calander
+            outputFile.WriteLine($"{_calander.GetWeeks()}||{_calander.GetTimers()}||{_calander.GetMonth()}||{_calander.GetYear()}");
+
+        }
+    }
+
+//Menu
     List<string> _options = new List<string>()
     {
-        "Create/Alter Profile",
-        "View Week Plan",
+        "View Profile",
+        "View This Week's Plan",
         "View Calander",
-        "Make Plan",
-        "Change Plan",
-        "View Alerts",
-        "Cook"
+        "View Alerts"
     };
 
-    public static void DisplayMenu()
+    public void DisplayMenu()
     {   
         int count = 0;
         Console.WriteLine("Meal Planner");
@@ -44,26 +90,50 @@ static class Menu
         switch (selection)
         {
             case 1:
-                
+                ViewProfile();
                 break;
             case 2:
-
+                ViewThisWeek();
                 break;
             case 3:
-
+                ViewCalander();
                 break;
             case 4:
-
-                break;
-            case 5:
-
-                break;
-            case 6:
-
-                break;
-            case 7:
-
+                ViewAlerts();
                 break;
         }
+    }
+
+    public void ViewProfile()
+    {
+        if (_user == null)
+        {
+            Console.WriteLine("You haven't set up a profile yet! Lets do that first.");
+            _user = new User();
+        }
+        _user.DisplayProfile();
+    }
+
+    public void ViewThisWeek()
+    {
+        if (_calander == null)
+        {
+            Load();
+        }
+        _calander.DisplayThisWeek();
+    }
+
+    public void ViewCalander()
+    {
+        if (_calander == null)
+        {
+            Load();
+        }
+        _calander.DisplayCalander();
+    }
+
+    public void ViewAlerts()
+    {
+        Console.WriteLine("Sorry this feature is not ready");
     }
 }

@@ -18,6 +18,11 @@ class Meal
         _expirationDays = CalculateExpiration();
     }
 
+    public string DisplayName()
+    {
+        return _name;
+    }
+
     public int GetExpiration()
     {
         return _expirationDays;
